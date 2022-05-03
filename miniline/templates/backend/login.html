@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Miniline registration
+{% endblock %}
+
+{% block content %}
+    <div class="section" style="margin-top: 100px">
+        <h1>Авторизация</h1>
+    <form action="{% url 'login' %}" method='POST'>
+        {% csrf_token %}
+        {{ form.username }}
+        {{ form.password }}
+        {% if invalid %}
+            <p>Введи нормальные данные</p>
+        {% endif %}
+        <button type="submit">Войти</button>
+    </form>
+    <a href="{% url 'register' %}">Не зарегистрирован?</a>
+    </div>
+{% endblock %}
