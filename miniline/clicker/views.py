@@ -4,18 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from .forms import UserForm
 
-
-# todo
-# class SessionView(APIView):
-#     def get(self, request):
-#         if request.user.username is not None:
-#             user = User.objects.filter(username=request.user.username).first()
-#             return Response(Cart.objects.get_or_create(user=user)[0].id)
-#         else:
-#             return redirect('login')
 
 @login_required
 def user_logout(request):
