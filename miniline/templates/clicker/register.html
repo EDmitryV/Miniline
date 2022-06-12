@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% load static %}
-{% block title %}
-    Miniline регистрация
-{% endblock %}
+{% block title %}Miniline регистрация{% endblock %}
+{% block stylesheet %}{% static 'css/game.css' %}{% endblock %}
+{% block script %}{% static 'js/game.js' %}{% endblock %}
 
-{% block content %}
-    <div class="section" style="margin-top: 100px">
-        <h2>Регистрация</h2>
+{% block body %}
+    <div class="container">
+        <h2 class="container-child">Регистрация</h2>
         {% if form.errors %}
-            <p>{{form.errors}}</p>
+            <p>{{ form.errors }}</p>
         {% endif %}
-        <form action="{% url 'register' %}" method='POST'>
+        <form class="container-child" action="{% url 'register' %}" method='POST'>
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Зарегистрироваться</button>
+            <button class="btn" type="submit">Зарегистрироваться</button>
         </form>
-        <a href="{% url 'login' %}">Зарегистрирован?</a>
+        <div class="container-child"><a class="btn small-text" href="{% url 'login' %}">Зарегистрирован?</a></div>
     </div>
 {% endblock %}

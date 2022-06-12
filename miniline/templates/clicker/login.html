@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% load static %}
-{% block title %}
-    Miniline авторизация
-{% endblock %}
+{% block title %}Miniline авторизация{% endblock %}
+{% block stylesheet %}{% static 'css/game.css' %}{% endblock %}
+{% block script %}{% static 'js/game.js' %}{% endblock %}
 
-{% block content %}
-    <div class="section" style="margin-top: 100px">
-        <h1>Авторизация</h1>
-    <form action="{% url 'login' %}" method='POST'>
-        {% csrf_token %}
-        {{ form.username }}
-        {{ form.password }}
-        {% if invalid %}
-            <p>Введи нормальные данные</p>
-        {% endif %}
-        <button type="submit">Войти</button>
-    </form>
-    <a href="{% url 'register' %}">Не зарегистрирован?</a>
+{% block body %}
+    <div class="container">
+        <h2 class="container-child">Авторизация</h2>
+        <form class="container-child" action="{% url 'login' %}" method='POST'>
+            {% csrf_token %}
+            <div class="container-child"> {{ form.username }}</div>
+            <div class="container-child">{{ form.password }}</div>
+            {% if invalid %}
+                <p>Введи нормальные данные</p>
+            {% endif %}
+            <button class="btn" type="submit">Войти</button>
+        </form>
+        <div class="container-child"><a class="btn small-text" href="{% url 'register' %}">Не зарегистрирован?</a></div>
     </div>
 {% endblock %}

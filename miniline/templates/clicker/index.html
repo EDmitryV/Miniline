@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Miniline главная страница{% endblock %}
+{% block stylesheet %}{% static 'css/game.css' %}{% endblock %}
+{% block script %}{% static 'js/game.js' %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="container-child">Меню</h2>
+        <h3 class="container-child">Добро пожаловать, {{ username }}!</h3>
+        <div class="container-child"><a class="btn" href="{% url 'game' %}">Начать игру</a></div>
+        <div class="container-child"><a class="btn small-text" href="{% url 'logout' %}">Выйти</a></div>
+        <div class="container-child info-text">В приложении есть возможность загрузить собственный набор слов. Для
+            корректной работы данной функции в загружаемом файле в качестве раздлителя необходимо использовать
+            пробел или абзац.
+        </div>
+        <br>
+    </div>
+{% endblock %}
