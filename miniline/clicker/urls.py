@@ -21,6 +21,6 @@ urlpatterns = [
     path('boost/<int:pk>/', lonely_boost, name='boost'),
     path('update_points/', views.update_points),
     path('core/', views.get_core),
-    path('words/', views.set_words_set),
+    path('set_words/', views.set_words_set),
     path('switch_lang/', views.switch_lang)
 ]

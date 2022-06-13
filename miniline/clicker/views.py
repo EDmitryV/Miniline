@@ -118,6 +118,8 @@ def set_words_set(request):
     words = request.data['words']
 
     if len(words) != 0:
+        if core.words_set.lang == "":
+            WordsSet.objects.filter(id=core.words_set.id).delete()
         core.words_set = WordsSet.objects.create(words=words)
         core.save()
     return Response({"words_set": WordsSetSerializer(core.words_set).data})
@@ -126,9 +128,13 @@ def set_words_set(request):
 @api_view(['PUT'])
 def switch_lang(request):
     core = GameCore.objects.get(user=request.user)
-    if core.words_set.lang != 'ru':
-        core.words_set = WordsSet.objects.get(lang='ru')
-    else:
-        core.words_set = WordsSet.objects.get(lang='en')
+    match core.words_set.lang:
+        case '':
+            WordsSet.objects.filter(id=core.words_set.id).delete()
+            core.words_set = WordsSet.objects.get(lang='ru')
+        case 'ru':
+            core.words_set = WordsSet.objects.get(lang='en')
+        case other:
+            core.words_set = WordsSet.objects.get(lang='ru')
     core.save()
     return Response({"words_set": WordsSetSerializer(core.words_set).data})

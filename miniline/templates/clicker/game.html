@@ -2,12 +2,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Miniline игра{% endblock %}
-{% block stylesheet %}{% static 'css/game.css' %}{% endblock %}
+{% block stylesheet %}{% static 'css/main.css' %}{% endblock %}
 {% block script %}{% static 'js/game.js' %}{% endblock %}
 
 {% block body %}
     <main class="app">
-        <nav class="nav container">
+        <div class="nav container">
+            <h3 class="container-child">Настройки</h3>
             <p class="container-child">Вы: {{ user.username }}</p>
             <div class="container-child"><a class="btn small-text" href="{% url 'logout' %}">Выйти</a></div>
             <form class="form container-child" id="send-form">
@@ -15,10 +16,10 @@
                 <button type="submit" class="btn" id="submit-btn">Загрузить свой набор слов</button>
             </form>
             <div class="container-child">
-                <p>Lang: <span id="lang-indicator">error</span></p>
+                <p>Набор: <span id="lang-indicator">error</span></p>
                 <button class="btn" onclick="switchLang()">Сменить язык</button>
             </div>
-        </nav>
+        </div>
 
         <div class="container">
             <h3 class="container-child">Игра</h3>
@@ -27,8 +28,8 @@
             <div class="container-child">
                 <input type="text" id="answer-field" placeholder="Пиши здесь">
             </div>
-            <p class="container-child">Сила слова: <br> <span id="click_power">{{ core.click_power }}</span></p>
-            <p class="container-child">Печатало-асистент могёт: <br> <span id="auto_click_power">{{ core.auto_click_power }}</span></p>
+            <p class="container-child">Сила ввода: <br> <span id="click_power">{{ core.click_power }}</span></p>
+            <p class="container-child">Сила ассистента: <br> <span id="auto_click_power">{{ core.auto_click_power }}</span></p>
         </div>
 
         <aside class="boosts container" id="boosts">

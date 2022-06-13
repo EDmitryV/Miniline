@@ -16,12 +16,10 @@ function GameSession() {
             this.next_level_price = core.next_level_price
             this.words = core.words.split(/\r?\n?\s+/)
             let lang_indicator = document.getElementById("lang-indicator")
-            console.log(core.lang)
             if (core.lang === "")
-                lang_indicator.innerText = "Мой набор";
+                lang_indicator.innerText = "мой";
             else
                 lang_indicator.innerText = core.lang === "ru" ? "ru" : "en";
-            console.log(core.words)
             this.task_text = generate_task()
             render()
         })
@@ -61,10 +59,8 @@ let Game = new GameSession() // Экземпляр класса GameSession.
 
 
 function generate_task() {
-    console.log(Game.words)
     let word = Game.words[Math.floor(Math.random() * Game.words.length)]
     while (word === "" || word === "\n" || word === "\r" || word === " ") {
-        console.log(word)
         word = Game.words[Math.floor(Math.random() * Game.words.length)]
     }
     return word
@@ -91,6 +87,8 @@ function update_boost(boost) {
 
 
 function add_boost(parent, boost) {
+    const div = document.createElement('div')
+    div.setAttribute('class', 'container-child')
     const button = document.createElement('button')
     button.setAttribute('class', `boost_${boost.type}`)
     button.setAttribute('id', `boost_${boost.id}`)
@@ -100,7 +98,8 @@ function add_boost(parent, boost) {
         <p>+<span id="boost_power">${boost.power}</span></p> 
         <p><span id="boost_price">${boost.price}</span></p> 
     `
-    parent.appendChild(button)
+    div.appendChild(button)
+    parent.appendChild(div)
 }
 
 function getCore() {
@@ -185,6 +184,7 @@ function buy_boost(boost_id) {
         } else {
             Game.add_power(old_boost_stats.power)
         }
+        click_animation(document.getElementById(`boost_${boost_id}`), 200)
         update_boost(new_boost_stats) // Обновляем буст на фронтике.
     }).catch(err => console.log(err))
 }
@@ -222,7 +222,6 @@ function checkAnswer() {
     const task_field = document.getElementById('task-field')
     const answer_field = document.getElementById('answer-field')
     if (answer_field.value === Game.task_text) {
-        console.log(Game.task_text)
         answer_field.value = ""
         task_field.style.webkitAnimationName = "rightAnswerAnimation";
         Game.add_points(Game.click_power)
@@ -246,12 +245,10 @@ function initLoadFileForm() {
     inputFile.addEventListener('change', function () {
         let files = this.files;
         if (files.length === 0) {
-            console.log('No file is selected');
             return;
         }
         let reader = new FileReader();
         reader.onload = function (event) {
-            console.log('File content:', event.target.result);
             Game.loaded_words = event.target.result.split(/\r?\n?\s+/);
         };
         reader.readAsText(files[0]);
@@ -259,9 +256,8 @@ function initLoadFileForm() {
 
     form.addEventListener("submit", e => {
         e.preventDefault()
-        console.log("loaded words: " + Game.loaded_words)
         const csrftoken = getCookie('csrftoken')
-        return fetch(`/words/`, {
+        return fetch(`/set_words/`, {
             method: 'PUT',
             headers: {
                 "X-CSRFToken": csrftoken,
@@ -277,7 +273,7 @@ function initLoadFileForm() {
         }).then(response => {
             if (response.error) return
             Game.words = Game.loaded_words
-            lang_indicator.innerText = "Мой набор"
+            lang_indicator.innerText = "мой"
             Game.task_text = generate_task()
         }).catch(err => console.log(err))
     });
@@ -308,9 +304,15 @@ function switchLang() {
     }).then(response => {
         if (response.error) return
         Game.words = response.words_set.words.split(/\r?\n?\s+/)
-        console.log('words: '+Game.words)
         lang_indicator.innerText = response.words_set.lang
         Game.task_text = generate_task()
     }).catch(err => console.log(err))
 }
 
+function click_animation(node, time_ms) {
+    css_time = `.0${time_ms}s`
+    node.style.cssText = `transition: all ${css_time} linear; transform: scale(0.95);`
+    setTimeout(function() {
+        node.style.cssText = `transition: all ${css_time} linear; transform: scale(1);`
+    }, time_ms)
+}
