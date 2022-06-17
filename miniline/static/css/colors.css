@@ -1,0 +1,40 @@
+:root {
+  --container-bg-color-day: rgba(224, 201, 166, 0.4);
+  --container-border-color-day: rgba(0,0,0,0);
+  --body-bg-color-day: white;
+  --text-color-day: black;
+  --alt-text-color-day: black;
+  --border-color-day: black;
+  --transparent-bg-color-day: rgba(0, 0, 0, 0);
+  --btn-bg-color-hover-day: black;
+  --btn-text-color-day: black;
+  --btn-text-color-hover-day: white;
+  --shadow-color-day: rgba(34, 60, 80, 0.2);
+  --info-text-bg-color-day: white;
+
+  --container-bg-color-night: rgb(41, 42, 45);
+  --container-border-color-night: rgb(98, 40, 115);
+  --body-bg-color-night: rgb(32,33,36);
+  --text-color-night: white;
+  --alt-text-color-night: black;
+  --border-color-night: rgb(98, 40, 115);
+  --transparent-bg-color-night: rgba(0, 0, 0, 0);
+  --btn-bg-color-hover-night: rgb(98, 40, 115);
+  --btn-text-color-night: rgb(142, 58, 167);
+  --btn-text-color-hover-night: white;
+  --shadow-color-night: rgba(142, 58, 167, 0.2);
+  --info-text-bg-color-night: black;
+
+  --container-bg-color: var(--container-bg-color-day);
+  --container-border-color: var(--container-border-color-day);
+  --body-bg-color: var(--body-bg-color-day);
+  --text-color: var(--text-color-day);
+  --alt-text-color: var(--alt-text-color-day);
+  --border-color: var(--border-color-day);
+  --transparent-bg-color: var(--transparent-bg-color-day);
+  --btn-bg-color-hover: var(--btn-bg-color-hover-day);
+  --btn-text-color-hover: var(--btn-text-color-hover-day);
+  --btn-text-color: var(--btn-text-color-day);
+  --shadow-color: var(--shadow-color-day);
+  --info-text-bg-color: var(--info-text-bg-color-day);
+}

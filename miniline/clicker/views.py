@@ -56,7 +56,8 @@ def user_login(request):
     form = UserForm()
 
     if request.method == 'POST':
-        user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
+        user = authenticate(username=request.POST.get(
+            'username'), password=request.POST.get('password'))
         if user:
             login(request, user)
             return redirect('index')
@@ -84,7 +85,8 @@ def call_click(request):
     core = GameCore.objects.get(user=request.user)
     is_levelup = core.click()
     if is_levelup:
-        Boost.objects.create(core=core, price=core.points, power=core.level * 2)
+        Boost.objects.create(core=core, price=core.points,
+                             power=core.level * 2)
     core.save()
     return Response({'core': GameCoreSerializer(core).data, 'is_levelup': is_levelup})
 
@@ -97,7 +99,8 @@ def update_points(request):
     is_levelup, boost_type = core.set_points(points)
 
     if is_levelup:
-        Boost.objects.create(core=core, price=core.points, power=core.level * 2, type=boost_type)
+        Boost.objects.create(core=core, price=core.points,
+                             power=core.level * 2, type=boost_type)
     core.save()
 
     return Response({
@@ -138,3 +141,21 @@ def switch_lang(request):
             core.words_set = WordsSet.objects.get(lang='ru')
     core.save()
     return Response({"words_set": WordsSetSerializer(core.words_set).data})
+
+
+@api_view(['PUT'])
+def switch_theme(request):
+    core = GameCore.objects.get(user=request.user)
+    match core.night_theme:
+        case True:
+            core.night_theme = False
+        case other:
+            core.night_theme = True
+    core.save()
+    return Response({"theme": 'night' if core.night_theme else 'day'})
+
+
+@api_view(['GET'])
+def get_theme(request):
+    core = GameCore.objects.get(user=request.user)
+    return Response({"theme": ('night' if core.night_theme else 'day')})

@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Miniline регистрация{% endblock %}
-{% block stylesheet %}{% static 'css/main.css' %}{% endblock %}
-
-{% block body %}
-    <div class="container center">
-        <h2 class="container-child">Регистрация</h2>
-        {% if form.errors %}
-            <p>{{ form.errors }}</p>
-        {% endif %}
-        <form class="container-child" action="{% url 'register' %}" method='POST'>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn" type="submit">Зарегистрироваться</button>
-        </form>
-        <div class="container-child"><a class="btn small-text" href="{% url 'login' %}">Зарегистрирован?</a></div>
-    </div>
+{% extends "base.html" %} {% load static %} {% block title %}Miniline
+регистрация{% endblock %} {% block body %}
+<div class="container center">
+  <h2 class="container-child">Регистрация</h2>
+  {% if form.errors %}
+  <p>{{ form.errors }}</p>
+  {% endif %}
+  <form class="container-child" action="{% url 'register' %}" method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button class="btn" type="submit">Зарегистрироваться</button>
+  </form>
+  <div class="container-child">
+    <a class="btn small-text" href="{% url 'login' %}">Зарегистрирован?</a>
+  </div>
+</div>
 {% endblock %}

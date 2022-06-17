@@ -22,5 +22,7 @@ urlpatterns = [
     path('update_points/', views.update_points),
     path('core/', views.get_core),
     path('set_words/', views.set_words_set),
-    path('switch_lang/', views.switch_lang)
+    path('switch_lang/', views.switch_lang),
+    path('switch_theme/', views.switch_theme),
+    path('get_theme/', views.get_theme)
 ]

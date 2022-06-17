@@ -17,7 +17,9 @@ class GameCore(models.Model):
     auto_click_power = models.IntegerField(default=0)
     points = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
-    words_set = models.ForeignKey(WordsSet, null=True, on_delete=models.SET_DEFAULT, default=1)
+    words_set = models.ForeignKey(
+        WordsSet, null=True, on_delete=models.SET_DEFAULT, default=1)
+    night_theme = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -37,10 +39,8 @@ class GameCore(models.Model):
 
         return is_levelupdated, boost_type
 
-
     def is_levelup(self):
         return self.points >= self.calculate_next_level_price()
-
 
     def get_boost_type(self):
         boost_type = 0
@@ -48,16 +48,17 @@ class GameCore(models.Model):
             boost_type = 1
         return boost_type
 
-
     def calculate_next_level_price(self):
         return (self.level ** 2) * 10 * (self.level)
+
 
 class Boost(models.Model):
     core = models.ForeignKey(GameCore, null=False, on_delete=models.CASCADE)
     power = models.IntegerField(default=1)
     level = models.IntegerField(default=0)
     price = models.IntegerField(default=10)
-    type = models.PositiveSmallIntegerField(default=0, choices=BOOST_TYPE_CHOICES)
+    type = models.PositiveSmallIntegerField(
+        default=0, choices=BOOST_TYPE_CHOICES)
 
     def levelup(self, current_points):
         if self.price > current_points:

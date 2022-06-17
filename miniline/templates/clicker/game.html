@@ -1,50 +1,72 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Miniline игра{% endblock %}
-{% block stylesheet %}{% static 'css/main.css' %}{% endblock %}
-{% block script %}{% static 'js/game.js' %}{% endblock %}
-
+{% block title %}Miniline игра{%endblock %}
+{%block head%}
+<script type="text/javascript" src="{% static 'js/style_control.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/game.js' %}"></script>
+{%endblock%}
 {% block body %}
-    <main class="app">
-        <div class="nav container">
-            <h3 class="container-child">Настройки</h3>
-            <p class="container-child">Вы: {{ user.username }}</p>
-            <div class="container-child"><a class="btn small-text" href="{% url 'logout' %}">Выйти</a></div>
-            <form class="form container-child" id="send-form">
-                <input type="file" name="input-file" id="input-file"><br>
-                <button type="submit" class="btn" id="submit-btn">Загрузить свой набор слов</button>
-            </form>
-            <div class="container-child">
-                <p>Набор: <span id="lang-indicator">error</span></p>
-                <button class="btn" onclick="switchLang()">Сменить язык</button>
-            </div>
+<main class="app">
+    <div class="nav container">
+        <h3 class="container-child">Настройки</h3>
+        <p class="container-child">Вы: {{ user.username }}</p>
+        <div class="container-child">
+            <a class="btn small-text" href="{% url 'logout' %}">Выйти</a>
         </div>
-
-        <div class="container">
-            <h3 class="container-child">Игра</h3>
-            <div class="container-child">Твои финансы: <br> <span id="points">{{core.points}}</span></div>
-            <p class="container-child"> Напиши: <br><span id="task-field"></span></p>
-            <div class="container-child">
-                <input type="text" id="answer-field" placeholder="Пиши здесь">
-            </div>
-            <p class="container-child">Сила ввода: <br> <span id="click_power">{{ core.click_power }}</span></p>
-            <p class="container-child">Сила ассистента: <br> <span id="auto_click_power">{{ core.auto_click_power }}</span></p>
+        <form class="form container-child" id="send-form">
+            <input type="file" name="input-file" id="input-file"/><br/>
+            <button type="submit" class="btn" id="submit-btn">
+                Загрузить свой набор слов
+            </button>
+        </form>
+        <div class="container-child">
+            <p>Набор: <span id="lang-indicator">error</span></p>
+            <button class="btn" onclick="switchLang()">Сменить язык</button>
         </div>
+        <div class="container-child">
+            <button class="btn" onclick="switch_current_theme()">
+                Сменить тему страницы
+            </button>
+        </div>
+    </div>
 
-        <aside class="boosts container" id="boosts">
-            <h3 class="container-child">Улучшения</h3>
-            <div class="boosts-holder" id="boosts-holder">
-                {% for boost in boosts %}
-                    <div class="container-child">
-                    <button class="boost_{{ boost.type }}" id="boost_{{boost.id}}" onclick="buy_boost({{boost.id}})">
-                        <p>lvl: <span id="boost_level">{{boost.level}}</span></p>
-                        <p>+<span id="boost_power">{{boost.power}}</span></p>
-                        <p><span id="boost_price">{{boost.price}}</span></p>
-                    </button>
-                    </div>
-                {% endfor %}
+    <div class="container">
+        <h3 class="container-child">Игра</h3>
+        <div class="container-child">
+            Твои финансы: <br/>
+            <span id="points">{{core.points}}</span>
+        </div>
+        <p class="container-child">Напиши: <br/><span id="task-field"></span></p>
+        <div class="container-child">
+            <input type="text" id="answer-field" placeholder="Пиши здесь"/>
+        </div>
+        <p class="container-child">
+            Сила ввода: <br/>
+            <span id="click_power">{{ core.click_power }}</span>
+        </p>
+        <p class="container-child">
+            Сила ассистента: <br/>
+            <span id="auto_click_power">{{ core.auto_click_power }}</span>
+        </p>
+    </div>
+
+    <aside class="boosts container" id="boosts">
+        <h3 class="container-child">Улучшения</h3>
+        <div class="boosts-holder" id="boosts-holder">
+            {% for boost in boosts %}
+            <div class="container-child">
+                <button
+                        class="boost_{{ boost.type }}"
+                        id="boost_{{boost.id}}"
+                        onclick="buy_boost({{boost.id}})"
+                >
+                    <p>lvl: <span id="boost_level">{{boost.level}}</span></p>
+                    <p>+<span id="boost_power">{{boost.power}}</span></p>
+                    <p><span id="boost_price">{{boost.price}}</span></p>
+                </button>
             </div>
-        </aside>
-    </main>
+            {% endfor %}
+        </div>
+    </aside>
+</main>
 {% endblock %}

@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 {% load static %}
-{#  text blocks: title, keywords    #}
-{#  link blocks: stylesheet, script #}
-{#  code blocks: head, body         #}
 <html lang="ru">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{% block description %}{% endblock %}">
-    <meta name="keywords" content="{% block keywords %}{% endblock %}" />
-    <meta name="author" content="EDmitryBJ">
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="{% block description %}{% endblock %}"/>
+    <meta name="keywords" content="{% block keywords %}{% endblock %}"/>
+    <meta name="author" content="EDmitryBJ"/>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}">
-    <script type="text/javascript" src="{% block script %}{% endblock %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/colors.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
     {% block head %}{% endblock %}
 </head>
 
 <body>
-    {% block body %}{% endblock %}
+{% block body %}{% endblock %}
 </body>
-
 </html>
-
