@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-25 14:58+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\clicker\forms.py:15
+msgid "Login"
+msgstr ""
+
+#: .\clicker\forms.py:21
+msgid "Password"
+msgstr ""
+
+#: .\clicker\forms.py:27
+msgid "Repeat password"
+msgstr ""
+
+#: .\clicker\forms.py:38
+msgid "Password not equals!"
+msgstr ""
+
+#: .\clicker\forms.py:40
+msgid "User with this login already exist!"
+msgstr ""
+
+#: .\clicker\views.py:88
+msgid "Welcome, {}!"
+msgstr ""
+
+#: .\clicker\views.py:102
+msgid "Hi, {}!"
+msgstr ""
+
+#: .\miniline\settings.py:140
+msgid "English"
+msgstr ""
+
+#: .\miniline\settings.py:141
+msgid "Russian"
+msgstr ""
+
+#: .\templates\clicker\game.html:4
+msgid "Miniline game"
+msgstr ""
+
+#: .\templates\clicker\game.html:75
+msgid "set of words"
+msgstr ""
+
+#: .\templates\clicker\game.html:77
+msgid "My set of words"
+msgstr ""
+
+#: .\templates\clicker\game.html:83
+msgid "Game"
+msgstr ""
+
+#: .\templates\clicker\game.html:85
+msgid "Your finances:"
+msgstr ""
+
+#: .\templates\clicker\game.html:88
+msgid "Write:"
+msgstr ""
+
+#: .\templates\clicker\game.html:90
+msgid "Write here"
+msgstr ""
+
+#: .\templates\clicker\game.html:93
+msgid "Word input power:"
+msgstr ""
+
+#: .\templates\clicker\game.html:97
+msgid "Assistant power:"
+msgstr ""
+
+#: .\templates\clicker\game.html:103
+msgid "Boosts"
+msgstr ""
+
+#: .\templates\clicker\game.html:112
+msgid "Level:"
+msgstr ""
+
+#: .\templates\clicker\game.html:113
+msgid "Power increase:"
+msgstr ""
+
+#: .\templates\clicker\game.html:114
+msgid "Price:"
+msgstr ""
+
+#: .\templates\clicker\index.html:4
+msgid "Miniline main page"
+msgstr ""
+
+#: .\templates\clicker\index.html:10
+msgid "Menu"
+msgstr ""
+
+#: .\templates\clicker\index.html:12
+msgid "Start game"
+msgstr ""
+
+#: .\templates\clicker\index.html:13
+msgid "Log out"
+msgstr ""
+
+#: .\templates\clicker\index.html:14
+msgid ""
+"Attention! You can upload your own file with a set of words for training, "
+"but for this function to work correctly, the words in the file must be "
+"separated by a space."
+msgstr ""
+
+#: .\templates\clicker\login.html:5
+msgid "Miniline authorization"
+msgstr ""
+
+#: .\templates\clicker\login.html:9
+msgid "Authorization"
+msgstr ""
+
+#: .\templates\clicker\login.html:16
+msgid "Enter normal data"
+msgstr ""
+
+#: .\templates\clicker\login.html:19
+msgid "Log in"
+msgstr ""
+
+#: .\templates\clicker\login.html:23
+msgid "Not registered?"
+msgstr ""
+
+#: .\templates\clicker\register.html:4
+msgid "Miniline sign up"
+msgstr ""
+
+#: .\templates\clicker\register.html:7
+msgid "Registration"
+msgstr ""
+
+#: .\templates\clicker\register.html:20
+msgid "Register"
+msgstr ""
+
+#: .\templates\clicker\register.html:23
+msgid "Registered?"
+msgstr ""

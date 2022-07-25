@@ -1,0 +1,171 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-25 14:58+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\clicker\forms.py:15
+msgid "Login"
+msgstr "Логин"
+
+#: .\clicker\forms.py:21
+msgid "Password"
+msgstr "Пароль"
+
+#: .\clicker\forms.py:27
+msgid "Repeat password"
+msgstr "Повторите пароль"
+
+#: .\clicker\forms.py:38
+msgid "Password not equals!"
+msgstr "Пароли не совпадают!"
+
+#: .\clicker\forms.py:40
+msgid "User with this login already exist!"
+msgstr "Пользователь с таким логином уже существует!"
+
+#: .\clicker\views.py:88
+msgid "Welcome, {}!"
+msgstr "Добро пожаловать, {}!"
+
+#: .\clicker\views.py:102
+msgid "Hi, {}!"
+msgstr "Привет, {}!"
+
+#: .\miniline\settings.py:140
+msgid "English"
+msgstr ""
+
+#: .\miniline\settings.py:141
+msgid "Russian"
+msgstr ""
+
+#: .\templates\clicker\game.html:4
+msgid "Miniline game"
+msgstr "Miniline игра"
+
+#: .\templates\clicker\game.html:75
+msgid "set of words"
+msgstr "набор слов"
+
+#: .\templates\clicker\game.html:77
+msgid "My set of words"
+msgstr "Мой набор слов"
+
+#: .\templates\clicker\game.html:83
+msgid "Game"
+msgstr "Игра"
+
+#: .\templates\clicker\game.html:85
+msgid "Your finances:"
+msgstr "Ваши финансы:"
+
+#: .\templates\clicker\game.html:88
+msgid "Write:"
+msgstr "Напиши:"
+
+#: .\templates\clicker\game.html:90
+msgid "Write here"
+msgstr "Пиши здесь"
+
+#: .\templates\clicker\game.html:93
+msgid "Word input power:"
+msgstr "Сила ввода слова:"
+
+#: .\templates\clicker\game.html:97
+msgid "Assistant power:"
+msgstr "Сила ассистента:"
+
+#: .\templates\clicker\game.html:103
+msgid "Boosts"
+msgstr "Улучшения"
+
+#: .\templates\clicker\game.html:112
+msgid "Level:"
+msgstr "Уровень:"
+
+#: .\templates\clicker\game.html:113
+msgid "Power increase:"
+msgstr "Прирост силы:"
+
+#: .\templates\clicker\game.html:114
+msgid "Price:"
+msgstr "Цена:"
+
+#: .\templates\clicker\index.html:4
+msgid "Miniline main page"
+msgstr "Miniline главная страница"
+
+#: .\templates\clicker\index.html:10
+msgid "Menu"
+msgstr "Меню"
+
+#: .\templates\clicker\index.html:12
+msgid "Start game"
+msgstr "Начать игру"
+
+#: .\templates\clicker\index.html:13
+msgid "Log out"
+msgstr "Вернуться к авторизации"
+
+#: .\templates\clicker\index.html:14
+msgid ""
+"Attention! You can upload your own file with a set of words for training, "
+"but for this function to work correctly, the words in the file must be "
+"separated by a space."
+msgstr ""
+"Внимание! Вы можете загрузить собственный файл с набором слов для "
+"тренировки, однако для корректной работы данной функции слова в файле должны "
+"быть разделены пробелом."
+
+#: .\templates\clicker\login.html:5
+msgid "Miniline authorization"
+msgstr "Miniline авторизация"
+
+#: .\templates\clicker\login.html:9
+msgid "Authorization"
+msgstr "Авторизация"
+
+#: .\templates\clicker\login.html:16
+msgid "Enter normal data"
+msgstr "Введите нормальные данные"
+
+#: .\templates\clicker\login.html:19
+msgid "Log in"
+msgstr "Вход"
+
+#: .\templates\clicker\login.html:23
+msgid "Not registered?"
+msgstr "Не зарегистрированы?"
+
+#: .\templates\clicker\register.html:4
+msgid "Miniline sign up"
+msgstr "Miniline регистрация"
+
+#: .\templates\clicker\register.html:7
+msgid "Registration"
+msgstr "Регистрация"
+
+#: .\templates\clicker\register.html:20
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: .\templates\clicker\register.html:23
+msgid "Registered?"
+msgstr "Зарегистрирован?"
