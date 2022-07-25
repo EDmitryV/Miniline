@@ -1,12 +1,23 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
-from .models import GameCore, Boost, WordsSet
+from .models import GameCore, Boost
 from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from .forms import UserForm
 from rest_framework import viewsets
-from .serializers import GameCoreSerializer, BoostSerializer, WordsSetSerializer
+from .serializers import GameCoreSerializer, BoostSerializer
+from django.utils.translation import gettext as _
+from django.utils.translation import get_language, activate
+
+
+def translate(language):
+    cur_language = get_language()
+    try:
+        activate(language)
+    finally:
+        activate(cur_language)
 
 
 class BoostViewSet(viewsets.ModelViewSet):
@@ -54,7 +65,6 @@ def register(request):
 
 def user_login(request):
     form = UserForm()
-
     if request.method == 'POST':
         user = authenticate(username=request.POST.get(
             'username'), password=request.POST.get('password'))
@@ -62,33 +72,35 @@ def user_login(request):
             login(request, user)
             return redirect('index')
 
-        return render(request, 'clicker/login.html', {'form': form, 'invalid': True})
+        return render(request, 'clicker/login.html',
+                      {'form': form, 'invalid': True})
 
     return render(request, 'clicker/login.html', {'form': form})
 
 
 @login_required
 def index(request):
-    return render(request, 'clicker/index.html', {'username': request.user.username})
+    core = GameCore.objects.get(user=request.user)
+    if core.lang_code != get_language():
+        translate(core.lang_code)
+        print("some magic with languages in index()")
+    return render(request, 'clicker/index.html', {
+        'welcome': _('Welcome, {}!').format(request.user.username)
+    })
 
 
 @login_required
 def game(request):
     core = GameCore.objects.get(user=request.user)
     boosts = Boost.objects.filter(core=core)
-    return render(request, 'clicker/game.html', {'core': core, 'boosts': boosts})
-
-
-@api_view(['GET'])
-@login_required
-def call_click(request):
-    core = GameCore.objects.get(user=request.user)
-    is_levelup = core.click()
-    if is_levelup:
-        Boost.objects.create(core=core, price=core.points,
-                             power=core.level * 2)
-    core.save()
-    return Response({'core': GameCoreSerializer(core).data, 'is_levelup': is_levelup})
+    if core.lang_code != get_language():
+        translate(core.lang_code)
+        print("some magic with languages in game()")
+    return render(request, 'clicker/game.html', {
+        'core': core,
+        'boosts': boosts,
+        'hello': _('Hi, {}!').format(request.user.username)
+    })
 
 
 @api_view(['POST'])
@@ -99,8 +111,7 @@ def update_points(request):
     is_levelup, boost_type = core.set_points(points)
 
     if is_levelup:
-        Boost.objects.create(core=core, price=core.points,
-                             power=core.level * 2, type=boost_type)
+        Boost.objects.create(core=core, price=core.points, power=core.level * 2, type=boost_type)
     core.save()
 
     return Response({
@@ -112,35 +123,8 @@ def update_points(request):
 @api_view(['GET'])
 def get_core(request):
     core = GameCore.objects.get(user=request.user)
+    # print("saved words: "+core.words_set.content)
     return Response({'core': GameCoreSerializer(core).data})
-
-
-@api_view(['PUT'])
-def set_words_set(request):
-    core = GameCore.objects.get(user=request.user)
-    words = request.data['words']
-
-    if len(words) != 0:
-        if core.words_set.lang == "":
-            WordsSet.objects.filter(id=core.words_set.id).delete()
-        core.words_set = WordsSet.objects.create(words=words)
-        core.save()
-    return Response({"words_set": WordsSetSerializer(core.words_set).data})
-
-
-@api_view(['PUT'])
-def switch_lang(request):
-    core = GameCore.objects.get(user=request.user)
-    match core.words_set.lang:
-        case '':
-            WordsSet.objects.filter(id=core.words_set.id).delete()
-            core.words_set = WordsSet.objects.get(lang='ru')
-        case 'ru':
-            core.words_set = WordsSet.objects.get(lang='en')
-        case other:
-            core.words_set = WordsSet.objects.get(lang='ru')
-    core.save()
-    return Response({"words_set": WordsSetSerializer(core.words_set).data})
 
 
 @api_view(['PUT'])
@@ -159,3 +143,41 @@ def switch_theme(request):
 def get_theme(request):
     core = GameCore.objects.get(user=request.user)
     return Response({"theme": ('night' if core.night_theme else 'day')})
+
+
+@api_view(['GET'])
+def languages(request):
+    core = GameCore.objects.get(user=request.user)
+    result = {'current': core.lang}
+    return Response(result)
+
+
+@api_view(['GET'])
+def book_languages(request):
+    core = GameCore.objects.get(user=request.user)
+    result = {'current': core.book}
+    return Response(result)
+
+
+@api_view(['POST'])
+def set_language(request):
+    lang_code = request.data['lang_code']
+    core = GameCore.objects.get(user=request.user)
+    core.set_language(lang_code)
+    core.save()
+    return Response({'lang_code': core.lang_code})
+
+
+@api_view(['POST'])
+def set_words_set(request):
+    lang_code = request.data['lang_code']
+    words_set = request.data['words_set']
+    core = GameCore.objects.get(user=request.user)
+    core.set_words_set(lang_code=lang_code, content=words_set)
+    core.save()
+    return Response({"words_set": core.words_set.content})
+
+
+@api_view(['GET'])
+def get_lang_code(request):
+    return Response({"lang_code": GameCore.objects.get(user=request.user).lang_code})

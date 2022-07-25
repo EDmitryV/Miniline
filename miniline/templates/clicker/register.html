@@ -1,16 +1,26 @@
-{% extends "base.html" %} {% load static %} {% block title %}Miniline
-регистрация{% endblock %} {% block body %}
-<div class="container center">
-  <h2 class="container-child">Регистрация</h2>
-  {% if form.errors %}
-  <p>{{ form.errors }}</p>
-  {% endif %}
-  <form class="container-child" action="{% url 'register' %}" method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <button class="btn" type="submit">Зарегистрироваться</button>
-  </form>
-  <div class="container-child">
-    <a class="btn small-text" href="{% url 'login' %}">Зарегистрирован?</a>
+{% extends "base.html" %} 
+{% load static %} 
+{% load i18n %}
+{% block title %}{%trans "Miniline sign up"%}{% endblock %} 
+{% block body %}
+  <div class="container center">
+    <h2 class="container-child">{%trans "Registration"%}</h2>
+    <form class="form" action="{% url 'register' %}" method="POST">
+      {% csrf_token %} 
+      <div class="form-child">{{form.username}}</div>
+      <div class="form-child">{{form.password}}</div>
+      <div class="form-child">{{form.password_confirm}}</div>
+      {% if form.errors %}
+        <div class="container-child error">
+          {%for value in form.errors.values%}
+              {{ value }}
+          {%endfor%}
+        </div>
+      {% endif %}
+      <button class="btn form-child" type="submit">{%trans "Register"%}</button>
+    </form>
+    <div class="container-child">
+      <a class="btn small-text" href="{% url 'login' %}">{%trans "Registered?"%}</a>
+    </div>
   </div>
-</div>
 {% endblock %}

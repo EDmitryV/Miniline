@@ -1,20 +1,27 @@
-{% extends "base.html" %} {% load static %} {% block title %}Miniline
-авторизация{% endblock %} {% block body %}
-<div class="container center">
-    <h2 class="container-child">Авторизация</h2>
-    <form class="container-child" action="{% url 'login' %}" method="POST">
-        {% csrf_token %}
-        <div class="container-child">{{ form.username }}</div>
-        <div class="container-child">{{ form.password }}</div>
-        {% if invalid %}
-        <p>Введи нормальные данные</p>
-        {% endif %}
-        <button class="btn" type="submit">Войти</button>
-    </form>
-    <div class="container-child">
-        <a class="btn small-text" href="{% url 'register' %}"
-        >Не зарегистрирован?</a
-        >
+{% extends "base.html" %} 
+{% load static %} 
+{% load i18n %} 
+{% block title %}
+{%trans "Miniline authorization"%}
+{% endblock %} 
+{% block body %}
+    <div class="container center">
+        <h2 class="container-child">{%trans "Authorization"%}</h2>
+        <form class="form" action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-child">{{ form.username }}</div>
+            <div class="form-child">{{ form.password }}</div>
+            {% if invalid %}
+                <div class="form-child error">
+                    <p>{%trans "Enter normal data"%}</p>
+                </div>
+            {% endif %}
+            <button class="btn form-child" type="submit">{%trans "Log in"%}</button>
+        </form>
+        <div class="container-child">
+            <a class="btn small-text" href="{% url 'register' %}">
+                {%trans "Not registered?"%}
+            </a>
+        </div>
     </div>
-</div>
 {% endblock %}

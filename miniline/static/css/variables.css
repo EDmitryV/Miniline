@@ -1,5 +1,5 @@
 :root {
-  --container-bg-color-day: rgba(224, 201, 166, 0.4);
+  --container-bg-color-day: rgba(242, 233, 219, 1);
   --container-border-color-day: rgba(0,0,0,0);
   --body-bg-color-day: white;
   --text-color-day: black;
@@ -11,6 +11,7 @@
   --btn-text-color-hover-day: white;
   --shadow-color-day: rgba(34, 60, 80, 0.2);
   --info-text-bg-color-day: white;
+  --svg-img-color-day: black;
 
   --container-bg-color-night: rgb(41, 42, 45);
   --container-border-color-night: rgb(98, 40, 115);
@@ -24,6 +25,7 @@
   --btn-text-color-hover-night: white;
   --shadow-color-night: rgba(142, 58, 167, 0.2);
   --info-text-bg-color-night: black;
+  --svg-img-color-night: white;
 
   --container-bg-color: var(--container-bg-color-day);
   --container-border-color: var(--container-border-color-day);
@@ -37,4 +39,5 @@
   --btn-text-color: var(--btn-text-color-day);
   --shadow-color: var(--shadow-color-day);
   --info-text-bg-color: var(--info-text-bg-color-day);
+  --svg-img-color: var(--svg-img-color-day)
 }

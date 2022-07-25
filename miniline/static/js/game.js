@@ -14,12 +14,8 @@ function GameSession() {
             this.click_power = core.click_power
             this.auto_click_power = core.auto_click_power
             this.next_level_price = core.next_level_price
-            this.words = core.words.split(/\r?\n?\s+/)
-            let lang_indicator = document.getElementById("lang-indicator")
-            if (core.lang === "")
-                lang_indicator.innerText = "мой";
-            else
-                lang_indicator.innerText = core.lang === "ru" ? "ru" : "en";
+            console.log("loaded words: "+core.words)
+            this.words = core.words.split(" ")
             this.task_text = generate_task()
             render()
         })
@@ -50,6 +46,7 @@ function GameSession() {
     }
 
     this.update_task = function () {
+        console.log(this.task_text)
         this.task_text = generate_task()
         render()
     }
@@ -90,7 +87,7 @@ function add_boost(parent, boost) {
     const div = document.createElement('div')
     div.setAttribute('class', 'container-child')
     const button = document.createElement('button')
-    button.setAttribute('class', `boost_${boost.type}`)
+    button.setAttribute('class', `boost_${boost.type} container-child boost-btn`)
     button.setAttribute('id', `boost_${boost.id}`)
     button.setAttribute('onclick', `buy_boost(${boost.id})`)
     button.innerHTML = ` 
@@ -103,7 +100,7 @@ function add_boost(parent, boost) {
 }
 
 function getCore() {
-    return fetch('/core/', {
+    return fetch('/en/core/', {
         method: 'GET'
     }).then(response => {
         if (response.ok) {
@@ -116,9 +113,9 @@ function getCore() {
 }
 
 
-function updatePoints(current_points) {
+function updatePoints(current_points = Game.points) {
     const csrftoken = getCookie('csrftoken')
-    return fetch('/update_points/', {
+    return fetch('/en/update_points/', {
         method: 'POST',
         headers: {
             "X-CSRFToken": csrftoken,
@@ -133,7 +130,9 @@ function updatePoints(current_points) {
         }
         return Promise.reject(response)
     }).then(response => {
+        console.log("points updated")
         if (response.is_levelup) {
+            console.log("levelup!")
             get_boosts()
         }
         return response.core
@@ -142,7 +141,7 @@ function updatePoints(current_points) {
 
 
 function get_boosts() {
-    return fetch('/boosts/', {
+    return fetch('/en/boosts/', {
         method: 'GET'
     }).then(response => {
         if (response.ok) {
@@ -161,7 +160,7 @@ function get_boosts() {
 
 function buy_boost(boost_id) {
     const csrftoken = getCookie('csrftoken')
-    return fetch(`/boost/${boost_id}/`, {
+    return fetch(`/en/boost/${boost_id}/`, {
         method: 'PUT',
         headers: {
             "X-CSRFToken": csrftoken,
@@ -234,50 +233,50 @@ window.onload = function () {
     setAutoClick()
     setAutoSave()
     initAnswerInput()
-    initLoadFileForm()
+    // initLoadFileForm()
 }
 
-function initLoadFileForm() {
-    let lang_indicator = document.querySelector("#lang-indicator")
-    const form = document.querySelector("#send-form");
-    const inputFile = document.querySelector("#input-file");
+// function initLoadFileForm() {
+//     let lang_indicator = document.querySelector("#lang-indicator")
+//     const form = document.querySelector("#send-form");
+//     const inputFile = document.querySelector("#input-file");
 
-    inputFile.addEventListener('change', function () {
-        let files = this.files;
-        if (files.length === 0) {
-            return;
-        }
-        let reader = new FileReader();
-        reader.onload = function (event) {
-            Game.loaded_words = event.target.result.split(/\r?\n?\s+/);
-        };
-        reader.readAsText(files[0]);
-    })
+//     inputFile.addEventListener('change', function () {
+//         let files = this.files;
+//         if (files.length === 0) {
+//             return;
+//         }
+//         let reader = new FileReader();
+//         reader.onload = function (event) {
+//             Game.loaded_words = event.target.result.split(/\r?\n?\s+/);
+//         };
+//         reader.readAsText(files[0]);
+//     })
 
-    form.addEventListener("submit", e => {
-        e.preventDefault()
-        const csrftoken = getCookie('csrftoken')
-        return fetch(`/set_words/`, {
-            method: 'PUT',
-            headers: {
-                "X-CSRFToken": csrftoken,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                lang: "",
-                words: Game.loaded_words.join(' ')
-            })
-        }).then(response => {
-            if (response.ok) return response.json()
-            return Promise.reject(response)
-        }).then(response => {
-            if (response.error) return
-            Game.words = Game.loaded_words
-            lang_indicator.innerText = "мой"
-            Game.task_text = generate_task()
-        }).catch(err => console.log(err))
-    });
-}
+//     form.addEventListener("submit", e => {
+//         e.preventDefault()
+//         const csrftoken = getCookie('csrftoken')
+//         return fetch(`/set_words/`, {
+//             method: 'PUT',
+//             headers: {
+//                 "X-CSRFToken": csrftoken,
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 lang: "",
+//                 words: Game.loaded_words.join(' ')
+//             })
+//         }).then(response => {
+//             if (response.ok) return response.json()
+//             return Promise.reject(response)
+//         }).then(response => {
+//             if (response.error) return
+//             Game.words = Game.loaded_words
+//             lang_indicator.innerText = "мой"
+//             Game.task_text = generate_task()
+//         }).catch(err => console.log(err))
+//     });
+// }
 
 function initAnswerInput() {
     document.querySelector('#answer-field').oninput = function (event) {
@@ -288,31 +287,107 @@ function initAnswerInput() {
     })
 }
 
-function switchLang() {
-    let lang_indicator = document.querySelector("#lang-indicator")
-    const csrftoken = getCookie('csrftoken')
-    return fetch(`/switch_lang/`, {
-        method: 'PUT',
-        headers: {
-            "X-CSRFToken": csrftoken,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({})
-    }).then(response => {
-        if (response.ok) return response.json()
-        return Promise.reject(response)
-    }).then(response => {
-        if (response.error) return
-        Game.words = response.words_set.words.split(/\r?\n?\s+/)
-        lang_indicator.innerText = response.words_set.lang
-        Game.task_text = generate_task()
-    }).catch(err => console.log(err))
-}
+
+// function select_language(lang_code) {
+//     const csrftoken = getCookie('csrftoken')
+//     return fetch(`/set_language/`, {
+//         method: 'PUT',
+//         headers: {
+//             "X-CSRFToken": csrftoken,
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({})
+//     }).then(response => {
+//         if (response.ok) return response.json()
+//         return Promise.reject(response)
+//     }).then(response => {
+//         if (response.error) return
+//         Game.words = response.words_set.words.split(/\r?\n?\s+/)
+//         lang_indicator.innerText = response.words_set.lang
+//         Game.task_text = generate_task()
+//     }).catch(err => console.log(err))
+// }
 
 function click_animation(node, time_ms) {
     css_time = `.0${time_ms}s`
     node.style.cssText = `transition: all ${css_time} linear; transform: scale(0.95);`
-    setTimeout(function() {
+    setTimeout(function () {
         node.style.cssText = `transition: all ${css_time} linear; transform: scale(1);`
     }, time_ms)
+}
+
+function select_language(lang_code){
+    updatePoints(Game.points)
+    console.log("try to update language")
+    const csrftoken = getCookie('csrftoken');
+    return fetch(`/en/set_language/`, {
+            method: 'POST',
+            headers: {
+                "X-CSRFToken": csrftoken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                lang_code: lang_code
+            })
+        }).then(response => {
+            if (response.ok) return response.json()
+            return Promise.reject(response)
+        }).then(response => {
+            if (response.error) return
+                console.log("Новый язык установлен успешно")
+        }).catch(err => console.log(err));
+}
+
+function select_words_set(lang_code){
+    const csrftoken = getCookie('csrftoken');
+    if(lang_code=="my"){
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = e => { 
+            let file = e.target.files[0]; 
+            let reader = new FileReader();
+            reader.readAsText(file,'UTF-8');
+            reader.onload = readerEvent => {
+                return fetch(`/en/set_words_set/`, {
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lang_code: lang_code,
+                    words_set: readerEvent.target.result
+                })
+            }).then(response => {
+                if (response.ok) return response.json()
+                return Promise.reject(response)
+            }).then(response => {
+                if (response.error) return
+                    Game.words = response["words_set"].split(" ")
+                    Game.update_task()
+            }).catch(err => console.log(err));
+                    }
+                }
+        input.click();
+        }
+        else{
+                    return fetch(`/en/set_words_set/`, {
+                                method: 'POST',
+                                headers: {
+                                    "X-CSRFToken": csrftoken,
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    lang_code: lang_code,
+                                    words_set: ""
+                                })
+                            }).then(response => {
+                                if (response.ok) return response.json()
+                                return Promise.reject(response)
+                            }).then(response => {
+                                if (response.error) return
+                                    Game.words = response["words_set"].split(" ")
+                                    Game.update_task()
+                            }).catch(err => console.log(err));
+                }
 }

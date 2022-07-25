@@ -1,14 +1,27 @@
+import os.path
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from copy import copy
 from .constants import *
+from django.conf import settings
+
+
+def load_default_words_set(lang_code):
+    try:
+        return WordsSet.objects.get(lang_code=lang_code)
+    except:
+        path = os.path.dirname(os.path.realpath(__file__)).replace('clicker', 'words_sets') + "\\{}.txt".format(
+            lang_code)
+        with open(path, "r", encoding='UTF-8') as f:
+            return WordsSet.objects.create(lang_code=lang_code, content=f.read())
 
 
 class WordsSet(models.Model):
-    lang = models.TextField(default="")
-    words = models.TextField(default="")
+    lang_code = models.TextField(null=False)
+    content = models.TextField(null=False)
 
 
 class GameCore(models.Model):
@@ -17,14 +30,15 @@ class GameCore(models.Model):
     auto_click_power = models.IntegerField(default=0)
     points = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
-    words_set = models.ForeignKey(
-        WordsSet, null=True, on_delete=models.SET_DEFAULT, default=1)
     night_theme = models.BooleanField(default=False)
+    lang_code = models.TextField(default='en')
+    words_set = models.ForeignKey(WordsSet, on_delete=models.SET_NULL, null=True)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
-            GameCore.objects.create(user=instance)
+            print("user created")
+            GameCore.objects.create(user=instance, words_set=load_default_words_set(lang_code="en"))
 
     def set_points(self, points, commit=True):
         self.points = points
@@ -49,7 +63,30 @@ class GameCore(models.Model):
         return boost_type
 
     def calculate_next_level_price(self):
-        return (self.level ** 2) * 10 * (self.level)
+        return (self.level ** 2) * 20 * (self.level)
+
+    def set_language(self, lang_code):
+        for lang_pare in settings.LANGUAGES:
+            if lang_pare[0] == lang_code:
+                self.lang_code = lang_code
+                break
+
+    def set_words_set(self, lang_code, content=""):
+        print("update words set: " + lang_code)
+        if self.words_set.lang_code == "my":
+            self.words_set.delete()
+        contains = False
+        for lang_pare in settings.LANGUAGES:
+            if lang_pare[0] == lang_code:
+                contains = True
+                break
+        if lang_code == "my" or not contains:
+            if not content:
+                self.words_set = load_default_words_set(lang_code=lang_code)
+            else:
+                self.words_set = WordsSet.objects.create(lang_code=lang_code, content=content)
+        else:
+            self.words_set = load_default_words_set(lang_code=lang_code)
 
 
 class Boost(models.Model):

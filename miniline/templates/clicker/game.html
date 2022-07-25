@@ -1,72 +1,120 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Miniline игра{%endblock %}
-{%block head%}
-<script type="text/javascript" src="{% static 'js/style_control.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/game.js' %}"></script>
-{%endblock%}
+{% load i18n %}
+{% block title %}{%trans "Miniline game"%}{% endblock %}
+{% block head %}
+    <script type="text/javascript" src="{% static 'js/style_control.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/game.js' %}"></script>
+{% endblock %}
 {% block body %}
-<main class="app">
-    <div class="nav container">
-        <h3 class="container-child">Настройки</h3>
-        <p class="container-child">Вы: {{ user.username }}</p>
-        <div class="container-child">
-            <a class="btn small-text" href="{% url 'logout' %}">Выйти</a>
+    <nav>
+        <div>
+            <object type="image/svg+xml" data="{% static 'img/logo.svg' %}"></object>
+            <p class="navbar-text">Miniline</p>
         </div>
-        <form class="form container-child" id="send-form">
-            <input type="file" name="input-file" id="input-file"/><br/>
-            <button type="submit" class="btn" id="submit-btn">
-                Загрузить свой набор слов
-            </button>
-        </form>
-        <div class="container-child">
-            <p>Набор: <span id="lang-indicator">error</span></p>
-            <button class="btn" onclick="switchLang()">Сменить язык</button>
-        </div>
-        <div class="container-child">
-            <button class="btn" onclick="switch_current_theme()">
-                Сменить тему страницы
-            </button>
-        </div>
-    </div>
 
-    <div class="container">
-        <h3 class="container-child">Игра</h3>
-        <div class="container-child">
-            Твои финансы: <br/>
-            <span id="points">{{core.points}}</span>
-        </div>
-        <p class="container-child">Напиши: <br/><span id="task-field"></span></p>
-        <div class="container-child">
-            <input type="text" id="answer-field" placeholder="Пиши здесь"/>
-        </div>
-        <p class="container-child">
-            Сила ввода: <br/>
-            <span id="click_power">{{ core.click_power }}</span>
-        </p>
-        <p class="container-child">
-            Сила ассистента: <br/>
-            <span id="auto_click_power">{{ core.auto_click_power }}</span>
-        </p>
-    </div>
-
-    <aside class="boosts container" id="boosts">
-        <h3 class="container-child">Улучшения</h3>
-        <div class="boosts-holder" id="boosts-holder">
-            {% for boost in boosts %}
-            <div class="container-child">
-                <button
-                        class="boost_{{ boost.type }}"
-                        id="boost_{{boost.id}}"
-                        onclick="buy_boost({{boost.id}})"
-                >
-                    <p>lvl: <span id="boost_level">{{boost.level}}</span></p>
-                    <p>+<span id="boost_power">{{boost.power}}</span></p>
-                    <p><span id="boost_price">{{boost.price}}</span></p>
+        <div>
+            <div class="dropdown">
+                <button class="dropbtn navbar-btn unclikable">
+                    <svg class="navbar-btn_img" id="svg" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         width="400" height="400"
+                         viewBox="0, 0, 400,400">
+                        <g id="svgg">
+                            <path
+                                    d="M129.993 9.085 C -81.608 89.573,-26.131 396.875,200.000 396.875 C 464.065 396.875,470.201 8.950,206.250 1.738 C 172.354 0.812,144.752 3.471,129.993 9.085 M250.000 23.366 C 264.740 27.559,264.394 27.996,243.883 31.093 C 217.120 35.133,202.055 64.405,219.990 77.520 C 229.481 84.459,229.342 85.685,218.285 92.590 C 209.739 97.927,206.250 107.189,206.250 124.542 C 206.250 168.976,217.647 179.329,274.908 186.912 C 301.128 190.385,303.179 192.040,306.604 212.500 C 308.618 224.531,314.987 243.376,320.758 254.377 C 326.528 265.378,331.250 279.581,331.250 285.940 C 331.250 292.298,334.143 300.393,337.679 303.929 C 356.909 323.159,276.546 374.345,218.923 379.570 C 183.238 382.806,126.764 376.170,142.188 370.553 C 146.484 368.989,150.000 359.529,150.000 349.532 C 150.000 338.125,154.655 328.449,162.500 323.550 C 169.375 319.256,175.000 310.245,175.000 303.526 C 175.000 296.807,181.788 284.124,190.085 275.342 C 211.156 253.040,214.101 222.547,195.441 219.895 C 187.777 218.805,175.632 209.665,168.452 199.582 C 158.401 185.466,150.517 181.250,134.169 181.250 C 119.072 181.250,110.932 177.499,105.991 168.265 C 102.168 161.124,95.540 156.624,91.260 158.267 C 82.793 161.516,67.095 141.239,73.285 135.049 C 75.374 132.959,84.349 131.239,93.229 131.227 C 114.630 131.196,148.566 109.986,157.067 91.329 C 160.813 83.106,170.600 73.316,178.814 69.573 C 200.132 59.860,198.857 35.681,176.563 26.871 C 155.801 18.668,222.322 15.492,250.000 23.366 M154.375 43.750 C 168.961 43.750,175.296 56.048,160.938 56.491 C 156.641 56.623,147.500 65.365,140.625 75.918 C 125.840 98.610,105.779 110.371,72.801 115.680 C 49.714 119.396,48.828 120.424,51.198 140.722 C 53.872 163.631,41.856 161.084,35.671 137.430 C 28.278 109.159,115.952 19.702,133.679 37.429 C 137.155 40.905,146.469 43.750,154.375 43.750 M306.598 53.820 L 328.125 70.140 303.125 65.092 C 289.375 62.316,268.984 60.397,257.813 60.828 C 246.641 61.259,237.500 58.999,237.500 55.806 C 237.500 52.613,243.828 49.957,251.563 49.904 C 259.297 49.852,269.844 47.082,275.000 43.750 C 280.156 40.418,284.532 37.648,284.723 37.596 C 284.915 37.543,294.759 44.844,306.598 53.820 M343.388 90.401 C 355.790 98.066,343.377 106.250,319.350 106.250 C 304.664 106.250,291.895 102.060,285.692 95.205 C 275.255 83.672,325.703 79.471,343.388 90.401 M273.001 111.622 C 281.906 125.881,324.291 133.586,346.783 125.035 C 380.500 112.216,394.881 211.284,367.646 268.750 L 354.317 296.875 350.151 275.000 C 347.859 262.969,341.263 244.124,335.492 233.123 C 329.722 222.122,325.000 206.015,325.000 197.329 C 325.000 178.482,300.001 159.674,282.382 165.266 C 256.870 173.363,225.282 152.710,225.096 127.813 C 224.895 100.978,259.129 89.409,273.001 111.622 M51.553 203.005 C 46.778 227.982,60.797 254.347,81.002 258.388 C 97.978 261.783,98.648 263.399,101.383 307.512 C 104.870 363.757,106.217 362.467,75.780 332.030 C 38.552 294.802,23.544 261.098,19.997 206.753 L 16.970 160.381 35.776 173.772 C 50.430 184.207,53.913 190.660,51.553 203.005 M120.833 200.040 C 143.199 200.073,148.378 202.720,157.522 218.790 C 163.378 229.080,172.518 237.500,177.834 237.500 C 192.304 237.500,189.502 252.190,171.875 268.750 C 163.281 276.823,156.250 287.887,156.250 293.336 C 156.250 298.785,150.625 306.756,143.750 311.050 C 136.875 315.343,131.207 325.160,131.154 332.865 C 131.077 344.203,129.903 345.087,125.000 337.500 C 121.668 332.344,118.898 310.401,118.846 288.737 C 118.753 250.565,118.168 249.147,99.868 242.767 C 73.274 233.497,64.496 215.060,79.030 199.001 C 85.354 192.012,91.290 189.496,92.548 193.270 C 93.782 196.972,106.510 200.018,120.833 200.040 "
+                                    stroke="none" fill="var(--svg-img-color)" fill-rule="evenodd"></path>
+                        </g>
+                    </svg>
                 </button>
+                <div class="dropdown-content">
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for lang in languages %}
+                        <a class="dropdown-option" onclick='select_language("{{lang.code}}")' href="/{{ lang.code }}/game">{{ lang.name_local }}</a>
+                    {% endfor %}
+                </div>
             </div>
-            {% endfor %}
+
+            <buttton class="navbar-btn clickable" id="theme-btn" onclick="switch_current_theme()">
+            </buttton>
+            <p class="navbar-text">{{ hello }}</p>
+            <a class="navbar-btn clickable" onclick="updatePoints()" href="{% url 'logout' %}">
+                <svg class="navbar-btn_img" id="svg" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" width="400"
+                     height="400"
+                     viewBox="0, 0, 400,400">
+                    <g id="svgg">
+                        <path
+                                d="M7.500 7.500 C -3.475 18.475,-3.179 352.204,7.813 360.900 C 12.109 364.300,38.135 374.488,65.646 383.541 C 142.423 408.804,168.750 404.708,168.750 367.500 C 168.750 350.336,169.449 350.000,205.161 350.000 C 259.902 350.000,269.856 336.907,267.454 268.063 C 265.665 216.784,265.280 215.625,250.000 215.625 C 235.000 215.625,234.250 217.500,231.250 262.500 L 228.125 309.375 198.438 311.280 L 168.750 313.185 168.750 185.229 C 168.750 114.853,166.982 52.664,164.820 47.032 C 161.429 38.194,165.497 37.054,194.508 38.708 L 228.125 40.625 231.250 78.125 C 234.167 113.125,235.417 115.625,250.000 115.625 C 273.030 115.625,277.239 37.967,255.465 14.790 C 239.287 -2.431,23.767 -8.767,7.500 7.500 M300.000 115.625 L 300.000 150.000 259.179 150.000 C 228.506 150.000,217.456 152.350,214.730 159.455 C 207.731 177.692,224.705 187.500,263.265 187.500 L 300.000 187.500 300.000 218.750 C 300.000 262.996,316.925 261.713,364.258 213.881 C 408.737 168.933,408.708 161.351,363.881 116.992 C 315.146 68.765,300.000 68.441,300.000 115.625 "
+                                stroke="none" fill="var(--svg-img-color)" fill-rule="evenodd"></path>
+                    </g>
+                </svg>
+            </a>
         </div>
-    </aside>
-</main>
+    </nav>
+
+    <main class="app">
+        <div class="container">
+            <h3 class="container-child">{%trans "Game"%}</h3>
+            <div class="container-child">
+                {%trans "Your finances:"%} <br/>
+                <span id="points">{{ core.points }}</span>
+            </div>
+            <p class="container-child">{%trans "Write:"%} <br/><span id="task-field"></span></p>
+            <div class="container-child">
+                <input type="text" id="answer-field" placeholder="{%trans 'Write here'%}"/>
+            </div>
+<!--             <div class="container-child">
+ -->                <div class="dropdown">
+                    <button class="img-btn unclikable">
+                        <svg class="img-btn_img" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400"
+                             height="400"
+                             viewBox="0, 0, 400,400">
+                            <g id="svgg">
+                                <path
+                                        d="M27.531 13.156 C 16.538 25.304,15.625 37.511,15.625 172.358 C 15.625 353.320,11.807 345.763,104.851 348.969 C 161.776 350.930,166.813 352.192,184.375 368.898 C 238.847 420.713,331.981 407.835,368.148 343.486 C 402.620 282.151,374.482 199.558,310.938 175.552 C 294.721 169.426,293.744 166.843,293.645 129.842 L 293.540 90.625 249.174 45.313 L 204.808 0.000 122.123 0.000 C 46.000 0.000,38.492 1.044,27.531 13.156 M187.500 52.679 C 187.500 96.130,197.030 106.250,237.946 106.250 L 268.750 106.250 268.750 137.500 C 268.750 164.748,267.123 168.750,256.049 168.750 C 249.064 168.750,232.892 173.533,220.112 179.380 C 206.115 185.783,173.291 191.375,137.562 193.442 C 87.664 196.330,77.919 198.611,76.167 207.813 C 74.332 217.446,79.701 218.750,121.221 218.750 C 185.141 218.750,183.933 235.958,119.813 238.790 C 60.288 241.418,53.378 262.500,112.042 262.500 L 150.000 262.500 150.000 283.864 C 150.000 295.614,151.707 309.676,153.794 315.114 C 157.059 323.623,150.593 325.000,107.365 325.000 C 34.293 325.000,37.500 332.030,37.500 171.875 C 37.500 8.698,31.932 18.750,122.321 18.750 L 187.500 18.750 187.500 52.679 M236.804 86.531 C 219.737 89.117,206.144 72.890,206.510 50.368 C 206.763 34.849,207.426 35.116,228.901 59.375 C 250.396 83.656,250.623 84.437,236.804 86.531 M75.000 165.625 C 75.000 173.223,85.069 175.000,128.125 175.000 C 171.181 175.000,181.250 173.223,181.250 165.625 C 181.250 158.027,171.181 156.250,128.125 156.250 C 85.069 156.250,75.000 158.027,75.000 165.625 M319.842 209.205 C 380.233 250.241,371.444 339.036,303.816 371.128 C 225.469 408.306,142.019 313.544,187.466 239.005 C 215.314 193.332,276.284 179.606,319.842 209.205 M230.946 250.364 C 199.194 288.288,204.271 309.960,237.459 278.164 L 256.250 260.161 256.250 305.539 C 256.250 368.651,276.309 369.850,281.250 307.033 C 284.365 267.429,284.413 267.345,296.281 280.527 C 310.646 296.480,325.000 297.741,325.000 283.049 C 325.000 270.867,276.291 218.750,264.906 218.750 C 260.785 218.750,245.503 232.976,230.946 250.364 "
+                                        stroke="none" fill="var(--svg-img-color)" fill-rule="evenodd"></path>
+                            </g>
+                        </svg>
+                    </button>
+                    <div class="dropdown-content">
+                        {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for lang in languages %}
+                                <button class="dropdown-option" onclick='select_words_set("{{ lang.code }}")'>{{ lang.name_local }} {%trans "set of words"%}</button>
+                            {% endfor %}
+                            <button class="dropdown-option" onclick='select_words_set("my")'>{%trans "My set of words"%}</button>
+                    </div>
+                </div>
+            <!-- </div> -->
+            <p class="container-child">
+                {%trans "Word input power:"%} <br/>
+                <span id="click_power">{{ core.click_power }}</span>
+            </p>
+            <p class="container-child">
+                {%trans "Assistant power:"%} <br/>
+                <span id="auto_click_power">{{ core.auto_click_power }}</span>
+            </p>
+        </div>
+
+        <aside class="boosts container" id="boosts">
+            <h3 class="container-child">{% trans "Boosts" %}</h3>
+            <div class="boosts-holder" id="boosts-holder">
+                {% for boost in boosts %}
+                    <div class="container-child">
+                        <button
+                                class="boost_{{ boost.type }} container-child boost-btn"
+                                id="boost_{{ boost.id }}"
+                                onclick="buy_boost({{ boost.id }})"
+                        >
+                            <p>{%trans "Level:"%} <span id="boost_level">{{ boost.level }}</span></p>
+                            <p>{%trans "Power increase:"%}<span id="boost_power">{{ boost.power }}</span></p>
+                            <p>{%trans "Price:"%}<span id="boost_price">{{ boost.price }}</span></p>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </aside>
+    </main>
 {% endblock %}

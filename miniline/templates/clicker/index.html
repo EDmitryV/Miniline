@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Miniline главная страница{% endblock %}
+{% load i18n %}
+{% block title %}{%trans "Miniline main page"%}{% endblock %}
 {%block head%}
 <script type="text/javascript" src="{% static 'js/style_control.js' %}"></script>
 {%endblock%}
 {% block body %}
     <div class="container center">
-        <h2 class="container-child">Меню</h2>
-        <h3 class="container-child">Добро пожаловать, {{ username }}!</h3>
-        <div class="container-child"><a class="btn" href="{% url 'game' %}">Начать игру</a></div>
-        <div class="container-child"><a class="btn small-text" href="{% url 'logout' %}">Выйти</a></div>
-        <div class="container-child info-text">В приложении есть возможность загрузить собственный набор слов. Для
-            корректной работы данной функции в загружаемом файле в качестве раздлителя необходимо использовать
-            пробел или абзац.
-        </div>
+        <h2 class="container-child">{%trans "Menu"%}</h2>
+        <h3 class="container-child">{{welcome}}</h3>
+        <div class="container-child"><a class="btn" href="{% url 'game' %}">{%trans "Start game"%}</a></div>
+        <div class="container-child"><a class="btn small-text" href="{% url 'logout' %}">{%trans "Log out"%}</a></div>
+        <div class="container-child info-text">{%trans "Attention! You can upload your own file with a set of words for training, but for this function to work correctly, the words in the file must be separated by a space."%}</div>
     </div>
 {% endblock %}
