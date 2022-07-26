@@ -13,7 +13,7 @@ def load_default_words_set(lang_code):
     try:
         return WordsSet.objects.get(lang_code=lang_code)
     except:
-        path = os.path.dirname(os.path.realpath(__file__)).replace('clicker', 'words_sets') + "\\{}.txt".format(
+        path = os.path.dirname(os.path.realpath(__file__)).replace('clicker', 'words_sets') + "/{}.txt".format(
             lang_code)
         with open(path, "r", encoding='UTF-8') as f:
             return WordsSet.objects.create(lang_code=lang_code, content=f.read())

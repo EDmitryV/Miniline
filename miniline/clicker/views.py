@@ -130,11 +130,10 @@ def get_core(request):
 @api_view(['PUT'])
 def switch_theme(request):
     core = GameCore.objects.get(user=request.user)
-    match core.night_theme:
-        case True:
-            core.night_theme = False
-        case other:
-            core.night_theme = True
+    if core.night_theme:
+        core.night_theme = False
+    else:
+        core.night_theme = True
     core.save()
     return Response({"theme": 'night' if core.night_theme else 'day'})
 
