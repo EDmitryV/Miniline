@@ -70,6 +70,7 @@ class GameCore(models.Model):
             if lang_pare[0] == lang_code:
                 self.lang_code = lang_code
                 break
+        self.save()
 
     def set_words_set(self, lang_code, content=""):
         print("update words set: " + lang_code)

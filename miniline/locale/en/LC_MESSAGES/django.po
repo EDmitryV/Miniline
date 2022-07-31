@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-25 14:58+0500\n"
+"POT-Creation-Date: 2022-07-31 15:00+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,11 +46,11 @@ msgstr ""
 msgid "Hi, {}!"
 msgstr ""
 
-#: .\miniline\settings.py:140
+#: .\miniline\settings.py:148
 msgid "English"
 msgstr ""
 
-#: .\miniline\settings.py:141
+#: .\miniline\settings.py:149
 msgid "Russian"
 msgstr ""
 
@@ -58,40 +58,44 @@ msgstr ""
 msgid "Miniline game"
 msgstr ""
 
-#: .\templates\clicker\game.html:75
-msgid "set of words"
-msgstr ""
-
-#: .\templates\clicker\game.html:77
-msgid "My set of words"
-msgstr ""
-
-#: .\templates\clicker\game.html:83
+#: .\templates\clicker\game.html:59
 msgid "Game"
 msgstr ""
 
-#: .\templates\clicker\game.html:85
+#: .\templates\clicker\game.html:61
 msgid "Your finances:"
 msgstr ""
 
-#: .\templates\clicker\game.html:88
+#: .\templates\clicker\game.html:64
 msgid "Write:"
 msgstr ""
 
-#: .\templates\clicker\game.html:90
+#: .\templates\clicker\game.html:66
 msgid "Write here"
 msgstr ""
 
-#: .\templates\clicker\game.html:93
+#: .\templates\clicker\game.html:85
+msgid "set of words"
+msgstr ""
+
+#: .\templates\clicker\game.html:87
+msgid "My set of words"
+msgstr ""
+
+#: .\templates\clicker\game.html:92
 msgid "Word input power:"
 msgstr ""
 
-#: .\templates\clicker\game.html:97
+#: .\templates\clicker\game.html:96
 msgid "Assistant power:"
 msgstr ""
 
-#: .\templates\clicker\game.html:103
+#: .\templates\clicker\game.html:102
 msgid "Boosts"
+msgstr ""
+
+#: .\templates\clicker\game.html:103
+msgid "(Keep typing words for new boosts)"
 msgstr ""
 
 #: .\templates\clicker\game.html:112
@@ -104,6 +108,22 @@ msgstr ""
 
 #: .\templates\clicker\game.html:114
 msgid "Price:"
+msgstr ""
+
+#: .\templates\clicker\game.html:123
+msgid "Contacts:"
+msgstr ""
+
+#: .\templates\clicker\game.html:124
+msgid "Email:"
+msgstr ""
+
+#: .\templates\clicker\game.html:127
+msgid "Telegram:"
+msgstr ""
+
+#: .\templates\clicker\game.html:128
+msgid "Phone number: "
 msgstr ""
 
 #: .\templates\clicker\index.html:4

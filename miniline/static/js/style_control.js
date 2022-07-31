@@ -30,8 +30,6 @@ function change_css(theme) {
     const alt_text_color = `var(--alt-text-color-${theme})`;
     const svg_img_color = `var(--svg-img-color-${theme})`;
 
-    console.log(theme)
-
     style = document.body.style;
 
     style.setProperty("--container-bg-color", container_bg_color);
@@ -51,7 +49,6 @@ function change_css(theme) {
     const theme_btn = document.getElementById("theme-btn");
     theme_btn.innerHTML = ""
     if (theme === "night") {
-        console.log("theme night")
         theme_btn.innerHTML = "<svg class=\"navbar-btn_img\" id=\"svg\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"400\" height=\"400\"\n" +
             "     viewBox=\"0, 0, 400,400\">\n" +
             "    <g id=\"svgg\">\n" +
@@ -61,7 +58,6 @@ function change_css(theme) {
             "    </g>\n" +
             "</svg>"
     } else {
-        console.log("theme day")
         theme_btn.innerHTML = "<svg class=\"navbar-btn_img\" id=\"svg\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"400\" height=\"400\"\n" +
             "     viewBox=\"0, 0, 400,400\">\n" +
             "    <g id=\"svgg\">\n" +
@@ -89,7 +85,6 @@ function load_current_theme() {
         .then((response) => {
             if (response.error) return;
             theme = response.theme;
-            console.log(theme);
             change_css(theme);
         })
         .catch((err) => console.log(err));
@@ -117,7 +112,7 @@ function switch_current_theme() {
 }
 
 function load_current_lang(){
-    return fetch('/en/get_lang_code/', {
+    return fetch('/get_lang_code/', {
         method: 'GET'
     }).then(response => {
         if (response.ok) {
@@ -125,10 +120,8 @@ function load_current_lang(){
         }
         return Promise.reject(response)
     }).then(json_resp => {
-        console.log(json_resp['lang_code']);
         let url_parts = window.location.href.split('/');
         if(url_parts.indexOf(json_resp['lang_code']) == -1){
-            // let browser_lang = navigator.language || navigator.userLanguage;
             let idx = -1;
             for(var i = 0; i < url_parts.length; i++){
                 if(url_parts[i].length === 2){
@@ -136,10 +129,7 @@ function load_current_lang(){
                     break;
                 }
             }
-            console.log(idx)
             url_parts[idx] = json_resp['lang_code']
-            console.log(url_parts.join("/"))
-            console.log(json_resp['lang_code'])
             window.location.replace(url_parts.join("/"))
         }
     }).catch(error => console.log(error))

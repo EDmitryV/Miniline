@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-25 14:58+0500\n"
+"POT-Creation-Date: 2022-07-31 15:00+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,11 +48,11 @@ msgstr "Добро пожаловать, {}!"
 msgid "Hi, {}!"
 msgstr "Привет, {}!"
 
-#: .\miniline\settings.py:140
+#: .\miniline\settings.py:148
 msgid "English"
 msgstr ""
 
-#: .\miniline\settings.py:141
+#: .\miniline\settings.py:149
 msgid "Russian"
 msgstr ""
 
@@ -60,41 +60,45 @@ msgstr ""
 msgid "Miniline game"
 msgstr "Miniline игра"
 
-#: .\templates\clicker\game.html:75
-msgid "set of words"
-msgstr "набор слов"
-
-#: .\templates\clicker\game.html:77
-msgid "My set of words"
-msgstr "Мой набор слов"
-
-#: .\templates\clicker\game.html:83
+#: .\templates\clicker\game.html:59
 msgid "Game"
 msgstr "Игра"
 
-#: .\templates\clicker\game.html:85
+#: .\templates\clicker\game.html:61
 msgid "Your finances:"
 msgstr "Ваши финансы:"
 
-#: .\templates\clicker\game.html:88
+#: .\templates\clicker\game.html:64
 msgid "Write:"
 msgstr "Напиши:"
 
-#: .\templates\clicker\game.html:90
+#: .\templates\clicker\game.html:66
 msgid "Write here"
 msgstr "Пиши здесь"
 
-#: .\templates\clicker\game.html:93
+#: .\templates\clicker\game.html:85
+msgid "set of words"
+msgstr "набор слов"
+
+#: .\templates\clicker\game.html:87
+msgid "My set of words"
+msgstr "Мой набор слов"
+
+#: .\templates\clicker\game.html:92
 msgid "Word input power:"
 msgstr "Сила ввода слова:"
 
-#: .\templates\clicker\game.html:97
+#: .\templates\clicker\game.html:96
 msgid "Assistant power:"
 msgstr "Сила ассистента:"
 
-#: .\templates\clicker\game.html:103
+#: .\templates\clicker\game.html:102
 msgid "Boosts"
 msgstr "Улучшения"
+
+#: .\templates\clicker\game.html:103
+msgid "(Keep typing words for new boosts)"
+msgstr "(Продолжайте вводить слова для открытия новых улучшений)"
 
 #: .\templates\clicker\game.html:112
 msgid "Level:"
@@ -107,6 +111,24 @@ msgstr "Прирост силы:"
 #: .\templates\clicker\game.html:114
 msgid "Price:"
 msgstr "Цена:"
+
+#: .\templates\clicker\game.html:123
+msgid "Contacts:"
+msgstr "Контактная информация:"
+
+#: .\templates\clicker\game.html:124
+msgid "Email:"
+msgstr "Почта:"
+
+#: .\templates\clicker\game.html:127
+msgid "Telegram:"
+msgstr ""
+
+#: .\templates\clicker\game.html:128
+#, fuzzy
+#| msgid "Phone number:"
+msgid "Phone number: "
+msgstr "Номер телефона:"
 
 #: .\templates\clicker\index.html:4
 msgid "Miniline main page"

@@ -14,7 +14,6 @@ function GameSession() {
             this.click_power = core.click_power
             this.auto_click_power = core.auto_click_power
             this.next_level_price = core.next_level_price
-            console.log("loaded words: "+core.words)
             this.words = core.words.split(" ")
             this.task_text = generate_task()
             render()
@@ -46,7 +45,6 @@ function GameSession() {
     }
 
     this.update_task = function () {
-        console.log(this.task_text)
         this.task_text = generate_task()
         render()
     }
@@ -130,9 +128,7 @@ function updatePoints(current_points = Game.points) {
         }
         return Promise.reject(response)
     }).then(response => {
-        console.log("points updated")
         if (response.is_levelup) {
-            console.log("levelup!")
             get_boosts()
         }
         return response.core
@@ -318,7 +314,6 @@ function click_animation(node, time_ms) {
 
 function select_language(lang_code){
     updatePoints(Game.points)
-    console.log("try to update language")
     const csrftoken = getCookie('csrftoken');
     return fetch(`/en/set_language/`, {
             method: 'POST',
@@ -334,7 +329,7 @@ function select_language(lang_code){
             return Promise.reject(response)
         }).then(response => {
             if (response.error) return
-                console.log("Новый язык установлен успешно")
+                location.href = '/'+lang_code+'/game';
         }).catch(err => console.log(err));
 }
 

@@ -164,6 +164,7 @@ def set_language(request):
     core = GameCore.objects.get(user=request.user)
     core.set_language(lang_code)
     core.save()
+    print("language set to: {}".format(core.lang_code))
     return Response({'lang_code': core.lang_code})
 
 
@@ -173,10 +174,10 @@ def set_words_set(request):
     words_set = request.data['words_set']
     core = GameCore.objects.get(user=request.user)
     core.set_words_set(lang_code=lang_code, content=words_set)
-    core.save()
     return Response({"words_set": core.words_set.content})
 
 
 @api_view(['GET'])
 def get_lang_code(request):
+    print(GameCore.objects.get(user=request.user).lang_code)
     return Response({"lang_code": GameCore.objects.get(user=request.user).lang_code})

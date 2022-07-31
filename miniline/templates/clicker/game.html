@@ -31,7 +31,7 @@
                     {% get_available_languages as LANGUAGES %}
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for lang in languages %}
-                        <a class="dropdown-option" onclick='select_language("{{lang.code}}")' href="/{{ lang.code }}/game">{{ lang.name_local }}</a>
+                        <a class="dropdown-option" onclick='select_language("{{lang.code}}")' href="#">{{ lang.name_local }}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -100,6 +100,7 @@
 
         <aside class="boosts container" id="boosts">
             <h3 class="container-child">{% trans "Boosts" %}</h3>
+            <div class="container-child info-text">{% trans "(Keep typing words for new boosts)" %}</div>
             <div class="boosts-holder" id="boosts-holder">
                 {% for boost in boosts %}
                     <div class="container-child">
@@ -117,4 +118,14 @@
             </div>
         </aside>
     </main>
+    <footer>
+        <div>
+            <p>{% trans "Contacts:" %}</p>
+            <p>{% trans "Email:" %} edmitry.biz@gmail.com</p>
+        </div>
+        <div>
+            <p>{% trans "Telegram:" %} @DmitriyErshow</p>
+            <p>{% trans "Phone number: "%} 8(902)258-55-06</p>
+        </div>
+    </footer>
 {% endblock %}
